@@ -30,13 +30,13 @@ df.to_csv("temizdataset.csv", index= False)
 df = pd.read_csv("dataset_words.csv", sep=";")
 
 #
-vektor = TfidfVectorizer(max_features=5000, ngram_range=(1, 2))
+vektor = TfidfVectorizer(max_features=1000, ngram_range=(1, 2))
 X = vektor.fit_transform(df['text']).toarray()
 y = df['label']
 
 
 # Veriyi bölüyoruz bir kısmı ile makineyi eğitiyor bir kısmı ile test ediyoruz.
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=48)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.19, random_state=76)
 
 
 model = MultinomialNB()
