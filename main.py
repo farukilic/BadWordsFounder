@@ -26,24 +26,20 @@ df.to_csv("temizdataset.csv", index= False)
 
 """
 ########################################################################
-#Dosyayı okuyup ; değeri görünce sütun atlıyor
-df = pd.read_csv("dataset_words.csv", sep=";")
+data = pd.read_csv("dataset_words.csv", sep=";")
 
-#
-vektor = TfidfVectorizer(max_features=1000, ngram_range=(1, 2))
-X = vektor.fit_transform(df['text']).toarray()
-y = df['label']
+vektor = TfidfVectorizer(max_features=4000, ngram_range=(1, 2))
+X = vektor.fit_transform(data['text']).toarray()
+y = data['label']
 
 
-# Veriyi bölüyoruz bir kısmı ile makineyi eğitiyor bir kısmı ile test ediyoruz.
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.19, random_state=76)
+X_learn, X_test, y_learn, y_test = train_test_split(X, y, test_size=0.19, random_state=60)
 
 
 model = MultinomialNB()
-model.fit(X_train, y_train)
+model.fit(X_learn, y_learn)
 
 
-# Test et ve sonuçları yazdır
 y_pred = model.predict(X_test)
 print("Doğruluk Oranı:", accuracy_score(y_test, y_pred))
 print(classification_report(y_test, y_pred))
